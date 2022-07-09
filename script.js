@@ -1,4 +1,5 @@
 "use strict";
+
 const account1 = {
   owner: "Roey Mash",
   movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
@@ -56,7 +57,7 @@ const account3 = {
 };
 
 const account4 = {
-  owner: "Gal Bareket",
+  owner: "Sarah Smith",
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   movementsDates: [
@@ -74,6 +75,7 @@ const account4 = {
 };
 
 const accounts = [account1, account2, account3, account4];
+console.log(accounts);
 
 const labelWelcome = document.querySelector(".welcome");
 const labelDate = document.querySelector(".date");
@@ -121,7 +123,6 @@ const formatCur = function (value, locale, currency) {
 
 const displayMovments = function (account, sort = false) {
   containerMovements.innerText = "";
-
   const movs = sort
     ? account.movements.slice().sort((a, b) => a - b)
     : account.movements;
@@ -187,12 +188,6 @@ const creatUserName = function (accounts) {
       .split(" ")
       .map((name) => name[0])
       .join("");
-    console.log(
-      (account.username = account.owner
-        .toLowerCase()
-        .split(" ")
-        .map((name) => name[0]))
-    );
   });
 };
 creatUserName(accounts);
@@ -232,7 +227,6 @@ btnLogin.addEventListener("click", function (e) {
   currentAccount = accounts.find(
     (acc) => acc.username === inputLoginUsername.value
   );
-  console.log(currentAccount);
 
   if (currentAccount?.pin === +inputLoginPin.value)
     labelWelcome.innerText = `welcome back ${
@@ -259,6 +253,7 @@ btnLogin.addEventListener("click", function (e) {
   if (timer) clearInterval(timer);
   timer = startLogOutTimer();
   updateUI(currentAccount);
+  console.log(currentAccount);
 });
 
 btnLoan.addEventListener("click", function (e) {
