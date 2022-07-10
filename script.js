@@ -39,10 +39,9 @@ const account2 = {
 };
 
 const account3 = {
-  owner: "Tamar Mashiha",
-  movements: [200, -200, 340, -300, -20, 50, 400, -460],
-  interestRate: 0.7,
-  pin: 3333,
+  owner: "Tamar meshiha",
+  movements: [430, 1000, 700, 50, 90, 2000],
+  interestRate: 1,
   movementsDates: [
     "2019-11-01T13:15:33.035Z",
     "2019-11-30T09:48:16.867Z",
@@ -51,9 +50,10 @@ const account3 = {
     "2020-02-05T16:33:06.386Z",
     "2020-04-10T14:43:26.374Z",
     "2022-06-28T18:49:59.371Z",
-    "2022-07-1T12:01:20.894Z",
+    "2022-06-30T12:01:20.894Z",
   ],
-  currency: "USD",
+  pin: 3333,
+  currency: "ILS",
 };
 
 const account4 = {
@@ -103,6 +103,7 @@ const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
 const formatMovmentDate = function (date) {
+  const locale = navigator.language;
   const calcDayPassed = (date1, date2) =>
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
@@ -112,6 +113,7 @@ const formatMovmentDate = function (date) {
   if (daysPassed === 0) return "Today";
   if (daysPassed === 1) return "Yesterday";
   if (daysPassed <= 7) return `${daysPassed} days ago`;
+  return new Intl.DateTimeFormat(locale).format(date);
 };
 
 const formatCur = function (value, locale, currency) {
@@ -133,15 +135,16 @@ const displayMovments = function (account, sort = false) {
     const date = new Date(account.movementsDates[i]);
     const displayDate = formatMovmentDate(date);
 
-    const formattedMov = formatCur(mov, account.locale, account.currncy);
+    const formattedMov = formatCur(mov, account.currncy);
     const html = `
     <div class="movements__row">
     <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
     <div class="movements__date">${displayDate}</div> 
     <div class="movements__value">${formattedMov}</div>
     </div>`;
-
     containerMovements.insertAdjacentHTML("afterbegin", html);
+    console.log(date);
+    console.log(formattedMov);
   });
 };
 
@@ -317,9 +320,9 @@ btnClose.addEventListener("click", function (e) {
   }
 });
 
-let sorted = false;
-btnSort.addEventListener("click", function (e) {
-  e.preventDefault();
-  displayMovments(currentAccount.movements, !sorted);
-  sorted = !sorted;
-});
+//let sorted = false;
+// btnSort.addEventListener("click", function (e) {
+//   e.preventDefault();
+//   displayMovments(currentAccount.movements, !sorted);
+//   sorted = !sorted;
+// });
